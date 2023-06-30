@@ -1,6 +1,6 @@
 let cssTicket = () =>
 {
-    return `body
+    return `*
     {
         margin: 0;
         padding: 0;
@@ -10,6 +10,7 @@ let cssTicket = () =>
     {
         width: 100%;
         height: 100%;
+        margin: 20px;
         /* background-color: brown; */
         display: grid;
     }
@@ -34,9 +35,26 @@ let cssTicket = () =>
     label
     {
         padding: 5px;
-        margin: 15px;
+        margin: 10px;
     }
-    
+    Button
+    {
+        font-size: 20px;
+        padding: 5px;
+        margin: 15px;
+        background-color: rgb(23, 206, 78);
+    }
+    th
+    {
+        font-size:25px;
+        border: 1px solid black;
+    }
+
+    td
+    {
+        border: 1px solid #808080;
+        text-align: center;
+    }
     .redCell
     {
         background-color: red;
