@@ -8,15 +8,15 @@ class FirstButtonStateModel
 
 	increment()
 	{
-      if(this.value == 255)
-        {
-          this.value+=0;
-        }
-      else
-        {
-          this.value = this.value+1;
-        }
-      
+		if(this.value == 255)
+		{
+			this.value+=0;
+		}
+		else
+		{
+			this.value = this.value+1;
+		}
+		
 	}
 
 	read()
@@ -35,19 +35,19 @@ class SecondButtonStateModel
 
 	increment()
 	{
-      if(this.value == 254)
-        {
-          this.value+=1;
-        }
-      else if(this.value == 255)
-        {
-          this.value+=0;
-        }
-      else
-        {
-          this.value = this.value+2;
-        }
-      
+		if(this.value == 254)
+		{
+			this.value+=1;
+		}
+		else if(this.value == 255)
+		{
+			this.value+=0;
+		}
+		else
+		{
+			this.value = this.value+2;
+		}
+		
 	}
 
 	read()
@@ -62,7 +62,6 @@ class ButtonStateController
 	{
 		this.innerModel = model;
 		this.innerView = view;
-      
         this.ColorValue = 255;
 	}
 
@@ -74,7 +73,6 @@ class ButtonStateController
 	onclick()
 	{
         this.ColorValue = this.ColorValue - this.innerModel.ColorReferenceValue;
-      
 		this.innerModel.increment();
 		this.innerView.setValue( this.innerModel.read() );
         this.innerView.customButton.style.backgroundColor = `rgb(${this.ColorValue}, 0, 0)`;
