@@ -53,6 +53,7 @@ class Controller
     {
         let contact = this.referenceView.delContact.value;
         this.referenceModel.deleteContact(contact)
+        this.deleteContactLocalSt(contact)
         this.updateTableView()
     }
     updateTableView()
@@ -104,6 +105,7 @@ class Controller
         let telephone = this.referenceView.updContactTelephone.value;
 
         this.referenceModel.updateContact(column,value,telephone);
+        this.updateContactLocalSt(column,value,telephone);
         this.updateTableView();
     }
     readContact()
@@ -114,6 +116,79 @@ class Controller
 
         let contactData =contact.category + ' ' + contact.name + ' ' + contact.surname + ' ' + '\n';
         this.referenceView.rContactInformation.innerText = contactData;
+    }
+    findContactLocalS(telephone)
+    {
+        let index = this.ContactsStorage.findIndex(contact => 
+            {
+                let arrContact = contact.split( "-");
+                let telephoneLC = arrContact[3];
+                return telephoneLC === telephone;
+            })
+        return index;
+    }
+    deleteContactLocalSt(telephone)
+    {
+        let index = this.findContactLocalS(telephone);
+
+        if (index !== -1) 
+        {
+            this.ContactsStorage.splice(index, 1); // Eliminar el elemento del array
+            localStorage.setItem('contacts', JSON.stringify(this.ContactsStorage)); // Actualizar el LocalStorage
+        }
+
+    }
+    updateContactLocalSt(column,value,telephone)
+    {
+        let index = this.findContactLocalS(telephone);
+        
+        if (index !== -1) 
+        {
+            let contact = this.ContactsStorage[index];
+            let contactData = createContactData();
+            let arrContact = contact.split( "-");
+            
+            if(column == 'name')
+            {
+                arrContact[1] = value;
+                contactData.name = arrContact[1];
+                contactData.category = arrContact[0];
+                contactData.surname = arrContact[2];
+                contactData.telephone = arrContact[3];
+
+            }
+            else if(column == 'name')
+            {
+                arrContact[2] = value;
+                contactData.surname = arrContact[2];
+                contactData.name = arrContact[1];
+                contactData.category = arrContact[0];
+                contactData.telephone = arrContact[3];
+            }
+            else if(column == 'category')
+            {
+                arrContact[0] = value;
+                contactData.name = arrContact[1];
+                contactData.category = arrContact[0];
+                contactData.surname = arrContact[2];
+                contactData.telephone = arrContact[3];
+            }
+            else if(column == 'telephone')
+            {   arrContact[3] = value;
+                contactData.telephone = arrContact[3];
+                contactData.name = arrContact[1];
+                contactData.category = arrContact[0];
+                contactData.surname = arrContact[2];
+            }
+            else
+            {
+                alert('INVALID')
+            }
+            let contactLS = contactData.category + "-" + contactData.name + "-" + contactData.surname + "-" + contactData.telephone;
+            contactLS === '---' ? '' : this.ContactsStorage[index] = contactLS;
+            localStorage.setItem('contacts', JSON.stringify(this.ContactsStorage)); // Actualizar el LocalStorage
+        }
+
     }
 }
 
